@@ -1,25 +1,55 @@
 require_relative './part_1_solution.rb'
 
 def apply_coupons(cart, coupons)
-  # Consult README for inputs and outputs
-  #
-  # REMEMBER: This method **should** update cart
+
+  discount=[]
+  answer=[]
+  coupons.each do |coupon|
+    cart.each do |car|
+      if car[:item].eql?coupon[:item]
+        if car[:count]>=coupon[:num]
+          add_hash={
+            item:car[:item]+" W/COUPON",
+            price:coupon[:cost]/coupon[:num],
+            clearance:car[:clearance],
+            count:car[:count]-(car[:count]%coupon[:num])
+          }
+          discount<<add_hash
+          car[:count]=car[:count]%coupon[:num]
+        else
+          add_hash={
+            item:car[:item]+" W/COUPON"
+          }
+          discount<<add_hash
+        end
+      end
+    end
+  end
+  cart.each {|car| answer<<car}
+  discount.each {|disco| answer<<disco}
+  answer
 end
 
 def apply_clearance(cart)
-  # Consult README for inputs and outputs
-  #
-  # REMEMBER: This method **should** update cart
+  answer=cart
+  answer.each do |ans|
+    if ans[:clearance]==true
+      ans[:price]*=0.8
+    end
+  end
+  answer
 end
 
 def checkout(cart, coupons)
-  # Consult README for inputs and outputs
-  #
-  # This method should call
-  # * consolidate_cart
-  # * apply_coupons
-  # * apply_clearance
-  #
-  # BEFORE it begins the work of calculating the total (or else you might have
-  # some irritated customers
+  answer=0
+  consolidated=consolidate_cart(cart)
+  coupon=apply_coupons(consolidated,coupons)
+  clearance=apply_clearance(coupon)
+  clearance.each do |x|
+    if x[:price]!=nil && x[:count]!=nil
+      answer+=x[:price]*x[:count]
+    end
+  end
+  answer>100 ? answer-=answer*0.1 : answer
+  answer.round(2)
 end

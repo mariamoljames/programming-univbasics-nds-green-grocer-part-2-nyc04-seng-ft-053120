@@ -50,7 +50,7 @@ def checkout(cart, coupons)
   clearance=apply_clearance(coupon)
   clearance.each do |x|
     coupons.each do |y|
-      if x[:item].eql?y[:item]x[:count]>=y[:num]
+      if x[:item].include?y[:item]x[:count]>=y[:num]
         answer+=x[:price]*x[:count]
       end
     end

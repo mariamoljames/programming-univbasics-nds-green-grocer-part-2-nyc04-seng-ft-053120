@@ -48,8 +48,8 @@ def checkout(cart, coupons)
   consolidated=consolidate_cart(cart)
   coupon=apply_coupons(consolidated,coupons)
   clearance=apply_clearance(coupon)
-    clearance.each do |x|
-      coupons.each do |y|
+    consolidated.each do |x|
+      clearance.each do |y|
         answer+=x[:price]*x[:count]
         if x[:item].include?("DISCOUNT") && x[:count]<y[:num]
           answer-=x[:price]*x[:count]

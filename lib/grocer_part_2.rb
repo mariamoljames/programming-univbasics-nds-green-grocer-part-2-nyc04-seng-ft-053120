@@ -49,7 +49,11 @@ def checkout(cart, coupons)
   coupon=apply_coupons(consolidated,coupons)
   clearance=apply_clearance(coupon)
   clearance.each do |x|
-    answer+=x[:price]*x[:count]
+    coupons.each do |y|
+      if x[:item].eql?y[:item]x[:count]>=y[:num]
+        answer+=x[:price]*x[:count]
+      end
+    end
   end
   answer>100.0 ? answer-=answer*0.1 : answer
   answer.round(2)

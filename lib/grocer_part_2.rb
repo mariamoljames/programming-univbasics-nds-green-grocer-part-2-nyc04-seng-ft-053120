@@ -54,6 +54,7 @@ def checkout(cart, coupons)
       if x[:item].include?("DISCOUNT") && x[:count]<y[:num]
         answer-=x[:price]*x[:count]
       end
+    end
   end
   answer>100.0 ? answer-=answer*0.1 : answer
 end

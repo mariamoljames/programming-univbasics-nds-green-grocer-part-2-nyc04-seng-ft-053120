@@ -51,7 +51,7 @@ def checkout(cart, coupons)
   clearance=apply_clearance(coupon)
   clearance.each do |x|
     coupons.each do |y|
-      if 
+      if
       answer+=x[:price]*x[:count]
   end
   answer>100.0 ? answer-=answer*0.1 : answer
